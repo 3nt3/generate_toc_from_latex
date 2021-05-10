@@ -53,6 +53,7 @@ func main() {
 		if len(matches) > 0 {
 			title := regexp.MustCompile("(\\\\title{|})").ReplaceAllString(matches[0], "")
 
+			path := strings.TrimPrefix(path, "/var/www/schule.3nt3.de")
 			splitPath := strings.Split(path, "/")
 			l := len(splitPath)
 			dateString := splitPath[l-2]
