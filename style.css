@@ -1,0 +1,26 @@
+* {
+    font-family: 'Source Sans Pro';
+}
+
+html {
+    background-color:#161616;
+    color: white;
+}
+
+a {
+    color: #2ecc71;
+    text-decoration: none;
+}
+
+ul {
+    font-size: 14pt;
+    list-style: none;
+}
+
+li {
+    margin: 3pt 0;
+}
+
+.date {
+    font-weight: bold;
+}

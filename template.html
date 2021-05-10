@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Lösungen zu Aufgaben</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" type="text/css">
+
 </head>
+
 <body>
     <h1>Lösungen zu Aufgaben</h1>
-    <p>Ich lade hier Lösungen zu Aufgaben für Leute, die keine Zeit oder keine Lust haben, oder es nicht können oder so hoch</p>
-    
+    <p>Ich lade hier Lösungen zu Aufgaben für Leute, die keine Zeit oder keine Lust haben, oder es nicht können oder so
+        hoch</p>
+
     sharing is caring :)
 
     {{range $i, $subject := .subjects }}
-        <h1>{{ $subject }}</h1> 
-        <ul>
-            {{ range $j, $e := (index $.entries $subject ) }}
-            <li>{{ $e.DateString }} {{$e.Title}} (<a href="/{{$e.PDFPath}}">PDF</a><span> | </span><a href="/{{$e.LatexPath}}">LaTeX</a>)</li>
+    <h1>{{ $subject }}</h1>
+    <ul>
+        {{ range $j, $e := (index $.entries $subject ) }}
+        <li><span class="dat">{{ $e.DateString }}</span> {{$e.Title}} (<a href="/{{$e.PDFPath}}">PDF</a><span> | </span><a
+                href="/{{$e.LatexPath}}">LaTeX</a>)</li>
         {{else}} nix {{end}}
-        </ul> 
+    </ul>
     {{else}} <strong>nüscht</strong> {{end}}
 
     Last updated {{ $.lastUpdated }}
 </body>
+
 </html>
