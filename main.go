@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strings"
 	"text/template"
+	"time"
 )
 
 func main() {
@@ -100,7 +101,7 @@ func main() {
 
 	sort.Strings(subjects)
 
-	err = t.Execute(os.Stdout, map[string]interface{}{"subjects": subjects, "entries": entries})
+	err = t.Execute(os.Stdout, map[string]interface{}{"subjects": subjects, "entries": entries, "lastUpdated": time.Now()})
 	if err != nil {
 		log.Printf("error templating some more: %v\n", err)
 		return
