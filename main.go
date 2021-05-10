@@ -58,6 +58,9 @@ func main() {
 			l := len(splitPath)
 			dateString := splitPath[l-2]
 			subjectString := splitPath[l-3]
+			if subjectString == "misc" {
+				continue
+			}
 
 			if entries[subjectString] == nil {
 				entries[subjectString] = []entry{}
