@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Lösungen zu Aufgaben</title>
+</head>
+<body>
+    <h1>Lösungen zu Aufgaben</h1>
+    <p>Ich lade hier Lösungen zu Aufgaben für Leute, die keine Zeit oder keine Lust haben, oder es nicht können oder so hoch</p>
+    
+    sharing is caring :)
+
+    {{range $i, $subject := .subjects }}
+        <h1>{{ $subject }}</h1> 
+        <ul>
+            {{ range $j, $e := (index $.entries $subject ) }}
+            <li>{{ $e.DateString }} {{$e.Title}} (<a href="/{{$e.PDFPath}}">PDF</a><span> | </span><a href="/{{$e.LatexPath}}">LaTeX</a>)</li>
+        {{else}} nix {{end}}
+        </ul> 
+    {{else}} <strong>nüscht</strong> {{end}}
+</body>
+</html>
