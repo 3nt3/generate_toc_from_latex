@@ -21,7 +21,7 @@ func main() {
 
 	var latexFiles []string
 
-	err := filepath.Walk("docs/schule",
+	err := filepath.Walk("/var/www/schule.3nt3.de/schule",
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				log.Printf("err: %v\n", err)
