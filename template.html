@@ -21,8 +21,8 @@
     <h1>{{ $subject }} <a href="/schule/EF/{{ $subject }}">{{ $subject }}</a></h1>
     <ul>
         {{ range $j, $e := (index $.entries $subject ) }}
-        <li><span class="dat">{{ $e.DateString }}</span> {{$e.Title}} (<a href="/{{$e.PDFPath}}">PDF</a><span> | </span><a
-                href="/{{$e.LatexPath}}">LaTeX</a>)</li>
+        <li><span class="dat">{{ $e.DateString }}</span> {{$e.Title}} (<a href="{{$e.PDFPath}}">PDF</a><span> | </span><a
+                href="{{$e.LatexPath}}">LaTeX</a>)</li>
         {{else}} nix {{end}}
     </ul>
     {{else}} <strong>nüscht</strong> {{end}}
