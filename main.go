@@ -65,7 +65,7 @@ func main() {
 	}
 
 	entries := make(map[string][]entry, 0)
-	for _, directory := range directories {
+	for _, directory := range filteredDirectories {
 		// FIXME: change to other path
 		path := strings.TrimPrefix(directory, "/var/www/schule.3nt3.de/schule")
 
