@@ -16,25 +16,46 @@ func main() {
 	type entry struct {
 		DateString string
 		Title      string
+		IsFile     bool
 		LatexPath  string
 		PDFPath    string
 	}
 
 	var latexFiles []string
+	var directories []string
 
-	err := filepath.Walk("/var/www/schule.3nt3.de/schule",
+	dateRe := regexp.MustCompile("[0-9]{4}-[0-9]{2}-[0-9]{2}")
+
+	err := filepath.Walk("schule",
 		func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				log.Printf("err: %v\n", err)
-				return err
+			if info.IsDir() && dateRe.MatchString(info.Name()) {
+				directories = append(directories, path)
 			}
-
-			if strings.HasSuffix(path, ".tex") {
-				latexFiles = append(latexFiles, path)
-			}
-
 			return nil
 		})
+
+	filteredDirectories := []string{}
+	for _, directory := range directories {
+		var foundLaTeX bool
+		err = filepath.Walk(directory,
+			func(path string, info os.FileInfo, err error) error {
+				if err != nil {
+					log.Printf("err: %v\n", err)
+					return err
+				}
+
+				if strings.HasSuffix(path, ".tex") {
+					latexFiles = append(latexFiles, path)
+					foundLaTeX = true
+				}
+
+				return nil
+			})
+
+		if !foundLaTeX {
+			filteredDirectories = append(filteredDirectories, directory)
+		}
+	}
 
 	re, err := regexp.Compile("\\\\title{(.*?)}")
 	if err != nil {
@@ -43,6 +64,29 @@ func main() {
 	}
 
 	entries := make(map[string][]entry, 0)
+	for _, directory := range directories {
+		// FIXME: change to other path
+		path := strings.TrimPrefix(directory, "schule")
+
+		splitPath := strings.Split(path, "/")
+		if strings.HasSuffix(path, "__latexindent_temp.tex") {
+			continue
+		}
+
+		l := len(splitPath)
+		dateString := splitPath[l-1]
+		subjectString := splitPath[l-2]
+		if subjectString == "misc" {
+			continue
+		}
+
+		if entries[subjectString] == nil {
+			entries[subjectString] = []entry{}
+		}
+
+		entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: "", LatexPath: "", PDFPath: "", IsFile: false})
+	}
+
 	for _, path := range latexFiles {
 		b, err := ioutil.ReadFile(path)
 		if err != nil {
@@ -54,7 +98,8 @@ func main() {
 		if len(matches) > 0 {
 			title := regexp.MustCompile("(\\\\title{|})").ReplaceAllString(matches[0], "")
 
-			path := strings.TrimPrefix(path, "/var/www/schule.3nt3.de")
+			// FIXME: change path
+			path := strings.TrimPrefix(path, "schule")
 			if strings.HasSuffix(path, "__latexindent_temp.tex") {
 				continue
 			}
@@ -78,7 +123,7 @@ func main() {
 			splitPath[l-1] = pdfFile
 			pdfPath := strings.Join(splitPath, "/")
 
-			entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: title, LatexPath: path, PDFPath: pdfPath})
+			entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: title, LatexPath: path, PDFPath: pdfPath, IsFile: true})
 		}
 	}
 
@@ -94,7 +139,7 @@ func main() {
 		return
 	}
 
-	subjects := []string{}
+	var subjects []string
 	for k := range entries {
 		subjects = append(subjects, k)
 	}
@@ -107,3 +152,4 @@ func main() {
 		return
 	}
 }
+
