@@ -128,6 +128,18 @@ func main() {
 		}
 	}
 
+	//var sortedEntries = make(map[string][]entry, 0)
+
+	// sort by date
+	for subject := range entries {
+		sort.SliceStable(entries[subject], func(i, j int) bool {
+			ei := entries[subject][i]
+			ej := entries[subject][j]
+
+			return ei.DateString < ej.DateString
+		})
+	}
+
 	b, err := ioutil.ReadFile("template.html")
 	if err != nil {
 		log.Printf("error reading template.html: %v\n", err)
