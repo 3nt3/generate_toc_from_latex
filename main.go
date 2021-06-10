@@ -85,7 +85,7 @@ func main() {
 			entries[subjectString] = []entry{}
 		}
 
-		entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: "", LatexPath: "", PDFPath: "", DirectoryPath: "/schule/" + path, IsFile: false})
+		entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: "", LatexPath: "", PDFPath: "", DirectoryPath: "/schule" + path, IsFile: false})
 	}
 
 	for _, path := range latexFiles {
