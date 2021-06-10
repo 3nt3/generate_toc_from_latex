@@ -100,7 +100,7 @@ func main() {
 			title := regexp.MustCompile("(\\\\title{|})").ReplaceAllString(matches[0], "")
 
 			// FIXME: change path
-			path := strings.TrimPrefix(path, "/var/www/schule.3nt3.de/schule")
+			path := strings.TrimPrefix(path, "/var/www/schule.3nt3.de")
 			if strings.HasSuffix(path, "__latexindent_temp.tex") {
 				continue
 			}
