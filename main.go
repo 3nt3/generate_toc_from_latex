@@ -27,7 +27,7 @@ func main() {
 
 	dateRe := regexp.MustCompile("[0-9]{4}-[0-9]{2}-[0-9]{2}")
 
-	err := filepath.Walk("schule",
+	err := filepath.Walk("/var/www/schule.3nt3.de/schule",
 		func(path string, info os.FileInfo, err error) error {
 			if info.IsDir() && dateRe.MatchString(info.Name()) {
 				directories = append(directories, path)
@@ -67,7 +67,7 @@ func main() {
 	entries := make(map[string][]entry, 0)
 	for _, directory := range directories {
 		// FIXME: change to other path
-		path := strings.TrimPrefix(directory, "schule")
+		path := strings.TrimPrefix(directory, "/var/www/schule.3nt3.de/schule")
 
 		splitPath := strings.Split(path, "/")
 		if strings.HasSuffix(path, "__latexindent_temp.tex") {
@@ -100,7 +100,7 @@ func main() {
 			title := regexp.MustCompile("(\\\\title{|})").ReplaceAllString(matches[0], "")
 
 			// FIXME: change path
-			path := strings.TrimPrefix(path, "schule")
+			path := strings.TrimPrefix(path, "/var/www/schule.3nt3.de/schule")
 			if strings.HasSuffix(path, "__latexindent_temp.tex") {
 				continue
 			}
