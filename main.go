@@ -14,11 +14,12 @@ import (
 
 func main() {
 	type entry struct {
-		DateString string
-		Title      string
-		IsFile     bool
-		LatexPath  string
-		PDFPath    string
+		DateString    string
+		Title         string
+		IsFile        bool
+		LatexPath     string
+		PDFPath       string
+		DirectoryPath string
 	}
 
 	var latexFiles []string
@@ -84,7 +85,7 @@ func main() {
 			entries[subjectString] = []entry{}
 		}
 
-		entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: "", LatexPath: "", PDFPath: "", IsFile: false})
+		entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: "", LatexPath: "", PDFPath: "", DirectoryPath: path, IsFile: false})
 	}
 
 	for _, path := range latexFiles {
@@ -152,4 +153,3 @@ func main() {
 		return
 	}
 }
-

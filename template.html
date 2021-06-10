@@ -25,7 +25,7 @@
             <li><span class="dat">{{ $e.DateString }}</span> {{$e.Title}} (<a href="{{$e.PDFPath}}">PDF</a><span> | </span><a
                     href="{{$e.LatexPath}}">LaTeX</a>)</li>
             {{else}}
-            <li><a href="">{{$e.DateString}}</a> (kein LaTeX!)</li>
+            <li><a href="{{$e.DirectoryPath}}">{{$e.DateString}}</a> (kein LaTeX!)</li>
             {{end}}
         {{else}} nix {{end}}
     </ul>
