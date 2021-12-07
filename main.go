@@ -72,7 +72,7 @@ func main() {
 	entries := make(map[string][]entry, 0)
 	for _, directory := range filteredDirectories {
 		// FIXME: change to other path
-		path := strings.TrimPrefix(directory, *pathFlag)
+		path := strings.TrimPrefix(directory, "/var/www/schule.3nt3.de")
 
 		splitPath := strings.Split(path, "/")
 		if strings.HasSuffix(path, "__latexindent_temp.tex") {
@@ -135,7 +135,7 @@ func main() {
 			pdfFile := strings.Join(filenameSplit, ".")
 
 			splitPath[l-1] = pdfFile
-			pdfPath := strings.Join(splitPath, "/")
+			strings.Join(splitPath, "/")
 
 			entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: title, LatexPath: path, PDFPath: pdfPath, IsFile: true})
 		}
