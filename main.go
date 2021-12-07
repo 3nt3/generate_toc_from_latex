@@ -88,6 +88,11 @@ func main() {
 			continue
 		}
 
+		// respect hidden files
+		if strings.HasPrefix(subjectString, ".") || strings.HasPrefix(dateString, ".") {
+			continue
+		}
+
 		if entries[subjectString] == nil {
 			entries[subjectString] = []entry{}
 		}
@@ -125,6 +130,7 @@ func main() {
 			}
 
 			filenameSplit := strings.Split(splitPath[l-1], ".")
+
 			filenameSplit[len(filenameSplit)-1] = "pdf"
 			pdfFile := strings.Join(filenameSplit, ".")
 
