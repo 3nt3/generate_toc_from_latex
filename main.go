@@ -135,7 +135,7 @@ func main() {
 			pdfFile := strings.Join(filenameSplit, ".")
 
 			splitPath[l-1] = pdfFile
-			strings.Join(splitPath, "/")
+			pdfPath := strings.Join(splitPath, "/")
 
 			entries[subjectString] = append(entries[subjectString], entry{DateString: dateString, Title: title, LatexPath: path, PDFPath: pdfPath, IsFile: true})
 		}
