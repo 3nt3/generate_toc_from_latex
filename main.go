@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"io/ioutil"
 	"log"
 	"os"
@@ -13,6 +14,9 @@ import (
 )
 
 func main() {
+	var pathFlag = flag.String("path", "/var/www/schule.3nt3.de/schule", "Path to scan - '.../.../schule'")
+	flag.Parse()
+
 	type entry struct {
 		DateString    string
 		Title         string
@@ -27,7 +31,7 @@ func main() {
 
 	dateRe := regexp.MustCompile("[0-9]{4}-[0-9]{2}-[0-9]{2}")
 
-	err := filepath.Walk("/var/www/schule.3nt3.de/schule",
+	err := filepath.Walk(*pathFlag,
 		func(path string, info os.FileInfo, err error) error {
 			if info.IsDir() && dateRe.MatchString(info.Name()) {
 				directories = append(directories, path)
@@ -67,16 +71,18 @@ func main() {
 	entries := make(map[string][]entry, 0)
 	for _, directory := range filteredDirectories {
 		// FIXME: change to other path
-		path := strings.TrimPrefix(directory, "/var/www/schule.3nt3.de/schule")
+		path := strings.TrimPrefix(directory, *pathFlag)
 
 		splitPath := strings.Split(path, "/")
 		if strings.HasSuffix(path, "__latexindent_temp.tex") {
 			continue
 		}
 
-		l := len(splitPath)
-		dateString := splitPath[l-1]
-		subjectString := splitPath[l-2]
+		// 0 - Q1
+		// 1 - Q1/physik
+		// 2 - Q1/physik/2021-12-07
+		dateString := splitPath[2]
+		subjectString := splitPath[1]
 		if subjectString == "misc" {
 			continue
 		}
@@ -100,7 +106,7 @@ func main() {
 			title := regexp.MustCompile("(\\\\title{|})").ReplaceAllString(matches[0], "")
 
 			// FIXME: change path
-			path := strings.TrimPrefix(path, "/var/www/schule.3nt3.de")
+			path := strings.TrimPrefix(path, *pathFlag)
 			if strings.HasSuffix(path, "__latexindent_temp.tex") {
 				continue
 			}
