@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
+	//"os/exec"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -114,8 +114,8 @@ func main() {
 
 			splitPath := strings.Split(path, "/")
 			l := len(splitPath)
-			dateString := splitPath[l-2]
-			subjectString := splitPath[l-3]
+			dateString := splitPath[2]
+			subjectString := splitPath[1]
 			if subjectString == "misc" {
 				continue
 			}
@@ -166,7 +166,8 @@ func main() {
 
 	sort.Strings(subjects)
 
-	version, err := exec.Command("sh", "-c git rev-parse --short HEAD").Output()
+	//version, err := exec.Command("sh", "-c", "git", "rev-parse", "--short", "HEAD").Output()
+	version := ""
 	if err != nil {
 		log.Fatal(err)
 	}
