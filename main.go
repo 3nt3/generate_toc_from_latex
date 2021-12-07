@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -165,7 +166,12 @@ func main() {
 
 	sort.Strings(subjects)
 
-	err = t.Execute(os.Stdout, map[string]interface{}{"subjects": subjects, "entries": entries, "lastUpdated": time.Now()})
+	version, err := exec.Command("sh", "-c git rev-parse --short HEAD").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = t.Execute(os.Stdout, map[string]interface{}{"subjects": subjects, "entries": entries, "lastUpdated": time.Now(), "version": version})
 	if err != nil {
 		log.Printf("error templating some more: %v\n", err)
 		return
