@@ -26,14 +26,13 @@
       {{ range $j, $e := (index $.entries $subject ) }} {{ if $e.IsFile }}
       <li>
         <span class="dat">{{ $e.DateString }}</span> {{ $e.Title }} (<a
-          href="/schule/{{ $e.PDFPath }}"
+          href="{{ $e.PDFPath }}"
           >PDF</a
         ><span> | </span><a href="/schule/{{ $e.LatexPath }}">LaTeX</a>)
       </li>
       {{else}}
       <li>
-        <a href="/schule/{{ $e.DirectoryPath }}">{{ $e.DateString }}</a> (kein
-        LaTeX!)
+        <a href="{{ $e.DirectoryPath }}">{{ $e.DateString }}</a> (kein LaTeX!)
       </li>
       {{ end }} {{else}} nix {{ end }}
     </ul>
