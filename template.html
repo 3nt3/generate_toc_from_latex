@@ -18,37 +18,27 @@
       Lust haben, oder es nicht können oder so hoch
     </p>
 
-    sharing is caring :)
-
-    {{range $i, $subject := .subjects }}
+    sharing is caring :) {{range $i, $subject := .subjects }}
     <h1>
-      <a href="/schule/Q1/{{ $subject }}">{{ $subject }}</a>
+      <a href="/schule/Q/{{ $subject }}">{{ $subject }}</a>
     </h1>
     <ul>
-      {{ range $j, $e := (index $.entries $subject ) }}
-      {{ if $e.IsFile }}
+      {{ range $j, $e := (index $.entries $subject ) }} {{ if $e.IsFile }}
       <li>
         <span class="dat">{{ $e.DateString }}</span> {{ $e.Title }} (<a
-          href="{{ $e.PDFPath }}"
+          href="/schule/{{ $e.PDFPath }}"
           >PDF</a
-        ><span> | </span><a href="{{ $e.LatexPath }}">LaTeX</a>)
+        ><span> | </span><a href="/schule/{{ $e.LatexPath }}">LaTeX</a>)
       </li>
       {{else}}
       <li>
-        <a href="{{ $e.DirectoryPath }}">{{ $e.DateString }}</a> (kein LaTeX!)
+        <a href="/schule/{{ $e.DirectoryPath }}">{{ $e.DateString }}</a> (kein
+        LaTeX!)
       </li>
-      {{
-        end
-      }}
-      {{else}}
-      nix
-      {{
-        end
-      }}
+      {{ end }} {{else}} nix {{ end }}
     </ul>
-    {{else}} <strong>nüscht</strong> {{ end }}
-
-    Last updated {{ $.lastUpdated }} <br />
+    {{else}} <strong>nüscht</strong> {{ end }} Last updated {{ $.lastUpdated }}
+    <br />
     Version: {{ $.version }}
   </body>
 </html>
